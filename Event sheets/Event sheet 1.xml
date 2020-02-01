@@ -1,0 +1,547 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<c2eventsheet>
+    <!--All the 'name' attributes are ignored by Construct 2 - they are there for readability only.-->
+    <name>Event sheet 1</name>
+    <events>
+        <event-group description="Fullscreen, Quitter le jeu etc" sid="890857899207283" title="Settings">
+            <sub-events>
+                <event-block sid="678375167555915">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="246840546053014" type="Keyboard">
+                            <param id="0" name="Key">122</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="10" name="Request fullscreen" sid="134286549567962" type="Browser">
+                            <param id="0" name="Mode">3</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="208868868761473">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="881555319451727" type="Keyboard">
+                            <param id="0" name="Key">116</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="-26" name="Restart layout" sid="891167770536833" type="System" />
+                    </actions>
+                </event-block>
+                <event-block sid="698225811538381">
+                    <conditions>
+                        <condition id="0" name="On key pressed" sid="656304158963390" type="Keyboard">
+                            <param id="0" name="Key">27</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="1" name="Close" sid="503788208404493" type="Browser" />
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+        <event-group description="" sid="900536486149460" title="Character control">
+            <sub-events>
+                <comment>Si le joueur ne bouge pas, set l&apos;animation sur Idle et le PlayerState sur &quot;Idle&quot;</comment>
+                <event-block sid="438365786776344">
+                    <conditions>
+                        <condition behavior="Platform" id="0" inverted="1" name="Is moving" sid="578276368355265" type="spr_Player" />
+                        <condition id="-7" name="Compare instance variable" sid="803849600546355" type="spr_Player">
+                            <param id="0" name="Instance variable">PlayerState</param>
+                            <param id="1" name="Comparison">1</param>
+                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                        </condition>
+                        <condition id="2" inverted="1" name="Key is down" sid="426320731596714" type="Keyboard">
+                            <param id="0" name="Key">81</param>
+                        </condition>
+                        <condition id="2" inverted="1" name="Key is down" sid="142898715558974" type="Keyboard">
+                            <param id="0" name="Key">68</param>
+                        </condition>
+                        <condition id="2" inverted="1" name="Key is down" sid="293797269149953" type="Keyboard">
+                            <param id="0" name="Key">37</param>
+                        </condition>
+                        <condition id="2" inverted="1" name="Key is down" sid="523901927691058" type="Keyboard">
+                            <param id="0" name="Key">39</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="4" name="Set animation" sid="816611564998819" type="spr_Player">
+                            <param id="0" name="Animation">&quot;Idle&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="180321219562637" type="spr_Player">
+                            <param id="0" name="Instance variable">PlayerState</param>
+                            <param id="1" name="Value">&quot;Idle&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <comment>Si le joueur bouge, ne saute pas, ne tombe pas, ne dash pas set l&apos;animation sur Run et le PlayerState sur &quot;Run&quot;</comment>
+                <event-block sid="352735864035164">
+                    <conditions>
+                        <condition behavior="Platform" id="0" name="Is moving" sid="865719122927851" type="spr_Player" />
+                        <condition behavior="Platform" id="3" inverted="1" name="Is jumping" sid="636367971541987" type="spr_Player" />
+                        <condition behavior="Platform" id="4" inverted="1" name="Is falling" sid="146837760360321" type="spr_Player" />
+                        <condition id="-7" name="Compare instance variable" sid="240396807000020" type="spr_Player">
+                            <param id="0" name="Instance variable">PlayerState</param>
+                            <param id="1" name="Comparison">1</param>
+                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                        </condition>
+                    </conditions>
+                    <actions>
+                        <action id="4" name="Set animation" sid="568407512835994" type="spr_Player">
+                            <param id="0" name="Animation">&quot;Run&quot;</param>
+                            <param id="1" name="From">1</param>
+                        </action>
+                        <action id="-10" name="Set value" sid="644818909949001" type="spr_Player">
+                            <param id="0" name="Instance variable">PlayerState</param>
+                            <param id="1" name="Value">&quot;Run&quot;</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-group description="Les déplacement du joueur" sid="381915851617546" title="Player mouvements ">
+                    <sub-events>
+                        <comment>Mirror le sprite selon la direction</comment>
+                        <comment>Droite</comment>
+                        <event-block any="1" sid="252691879273785">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="809986770336073" type="Keyboard">
+                                    <param id="0" name="Key">39</param>
+                                </condition>
+                                <condition id="2" name="Key is down" sid="980411808297954" type="Keyboard">
+                                    <param id="0" name="Key">68</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="526275733357420">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="646511542771735" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="7" name="Set mirrored" sid="758802582672553" type="spr_Player">
+                                            <param id="0" name="State">1</param>
+                                        </action>
+                                        <action behavior="Platform" id="7" name="Simulate control" sid="793592132996031" type="spr_Player">
+                                            <param id="0" name="Control">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <comment>Gauche</comment>
+                        <event-block any="1" sid="419594118969356">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="960757411448405" type="Keyboard">
+                                    <param id="0" name="Key">37</param>
+                                </condition>
+                                <condition id="2" name="Key is down" sid="671594074935006" type="Keyboard">
+                                    <param id="0" name="Key">81</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="297447112063006">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="107606545547193" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="7" name="Set mirrored" sid="950550645018698" type="spr_Player">
+                                            <param id="0" name="State">0</param>
+                                        </action>
+                                        <action behavior="Platform" id="7" name="Simulate control" sid="495947875701523" type="spr_Player">
+                                            <param id="0" name="Control">0</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                        <comment>Jump</comment>
+                        <event-block any="1" sid="209554404766288">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="196899006295984" type="Keyboard">
+                                    <param id="0" name="Key">38</param>
+                                </condition>
+                                <condition id="2" name="Key is down" sid="988626570313537" type="Keyboard">
+                                    <param id="0" name="Key">90</param>
+                                </condition>
+                            </conditions>
+                            <actions />
+                            <sub-events>
+                                <event-block sid="217985196588988">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="121354850624196" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="7" name="Simulate control" sid="153532147502466" type="spr_Player">
+                                            <param id="0" name="Control">2</param>
+                                        </action>
+                                        <action id="-10" name="Set value" sid="351105930003387" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Value">&quot;Jump&quot;</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                            </sub-events>
+                        </event-block>
+                    </sub-events>
+                </event-group>
+                <event-group description="Les actions du joueur" sid="612661798831045" title="Player actions">
+                    <sub-events>
+                        <comment>Throw</comment>
+                        <event-block sid="230177753572932">
+                            <conditions>
+                                <condition id="-1" name="Every tick" sid="226696263562513" type="System" />
+                            </conditions>
+                            <actions>
+                                <action id="-10" name="Set value" sid="705747230659955" type="spr_Player">
+                                    <param id="0" name="Instance variable">MaxSpeed</param>
+                                    <param id="1" name="Value">self.Platform.MaxSpeed</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-block sid="602195473295186">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="579516409203966" type="Keyboard">
+                                    <param id="0" name="Key">82</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="4" name="Set animation" sid="768398178126494" type="spr_Player">
+                                    <param id="0" name="Animation">&quot;Throw&quot;</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="776936065444989" type="spr_Player">
+                                    <param id="0" name="Instance variable">PlayerState</param>
+                                    <param id="1" name="Value">&quot;Throw&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>Guard</comment>
+                        <event-block sid="466392820113642">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="884427262258506" type="Keyboard">
+                                    <param id="0" name="Key">69</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="4" name="Set animation" sid="964666138195002" type="spr_Player">
+                                    <param id="0" name="Animation">&quot;Guard&quot;</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="738803286144754" type="spr_Player">
+                                    <param id="0" name="Instance variable">PlayerState</param>
+                                    <param id="1" name="Value">&quot;Guard&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>Parry</comment>
+                        <event-block sid="502330328927571">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="268791802557119" type="Keyboard">
+                                    <param id="0" name="Key">65</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="4" name="Set animation" sid="721758590978233" type="spr_Player">
+                                    <param id="0" name="Animation">&quot;Parry&quot;</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="776585323836370" type="spr_Player">
+                                    <param id="0" name="Instance variable">PlayerState</param>
+                                    <param id="1" name="Value">&quot;Parry&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <comment>Surf</comment>
+                        <event-block sid="558517955059520">
+                            <conditions>
+                                <condition id="2" name="Key is down" sid="628616563609717" type="Keyboard">
+                                    <param id="0" name="Key">67</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="4" name="Set animation" sid="125737365280146" type="spr_Player">
+                                    <param id="0" name="Animation">&quot;Surf&quot;</param>
+                                    <param id="1" name="From">1</param>
+                                </action>
+                                <action id="-10" name="Set value" sid="119377258063908" type="spr_Player">
+                                    <param id="0" name="Instance variable">PlayerState</param>
+                                    <param id="1" name="Value">&quot;Surf&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                        <event-group description="Tout ce qui est lié au Dash" sid="445495271858066" title="Dash">
+                            <sub-events>
+                                <comment>Dash activation</comment>
+                                <event-block sid="117092069485468">
+                                    <conditions>
+                                        <condition id="0" name="On key pressed" sid="125092613033777" type="Keyboard">
+                                            <param id="0" name="Key">32</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="4" name="Set animation" sid="213437948628263" type="spr_Player">
+                                            <param id="0" name="Animation">&quot;Dash&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                        <action id="-10" name="Set value" sid="821181959971237" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Value">&quot;Dash&quot;</param>
+                                        </action>
+                                        <action behavior="Platform" id="1" name="Set max speed" sid="363267482898891" type="spr_Player">
+                                            <param id="0" name="Max Speed">1300</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <comment>Remet la vitesse max par défaut</comment>
+                                <event-block sid="692553706609751">
+                                    <conditions>
+                                        <condition id="-1" name="Every tick" sid="216604885455682" type="System" />
+                                        <condition id="-7" name="Compare instance variable" sid="636665353246068" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">1</param>
+                                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions />
+                                    <sub-events>
+                                        <event-block any="1" sid="571490036693913">
+                                            <conditions>
+                                                <condition id="-7" name="Compare instance variable" sid="924373464183753" type="spr_Player">
+                                                    <param id="0" name="Instance variable">MaxSpeed</param>
+                                                    <param id="1" name="Comparison">5</param>
+                                                    <param id="2" name="Value">710</param>
+                                                </condition>
+                                                <condition id="-7" name="Compare instance variable" sid="453127575339840" type="spr_Player">
+                                                    <param id="0" name="Instance variable">MaxSpeed</param>
+                                                    <param id="1" name="Comparison">2</param>
+                                                    <param id="2" name="Value">700</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action behavior="Platform" id="1" name="Set max speed" sid="253871485042076" type="spr_Player">
+                                                    <param id="0" name="Max Speed">lerp(Self.Platform.MaxSpeed, 700, 0.2)</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <comment>Si le joueur n&apos;est pas sur le sol durant le Dash, baisse la gravité</comment>
+                                <event-block sid="500054997273774">
+                                    <conditions>
+                                        <condition id="2" name="Is playing" sid="348425164373872" type="spr_Player">
+                                            <param id="0" name="Animation">&quot;Dash&quot;</param>
+                                        </condition>
+                                        <condition behavior="Platform" id="2" inverted="1" name="Is on floor" sid="625721419378445" type="spr_Player" />
+                                        <condition behavior="Platform" id="4" name="Is falling" sid="218162126634439" type="spr_Player" />
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="5" name="Set gravity" sid="927147382615811" type="spr_Player">
+                                            <param id="0" name="Gravity">400</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <comment>Remet la gravité par défaut, à la fin du Dash</comment>
+                                <event-block sid="614493439392601">
+                                    <conditions>
+                                        <condition id="4" name="On finished" sid="514028568046906" type="spr_Player">
+                                            <param id="0" name="Animation">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="5" name="Set gravity" sid="489234943828179" type="spr_Player">
+                                            <param id="0" name="Gravity">3000</param>
+                                        </action>
+                                        <action id="4" name="Set animation" sid="418805412682742" type="spr_Player">
+                                            <param id="0" name="Animation">&quot;Fall&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                    </actions>
+                                </event-block>
+                                <comment>Boost la vitesse du joueur dans la bonne direction et léger décollage du sol</comment>
+                                <event-block sid="723663605517689">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="283872041415589" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">&quot;Dash&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action behavior="Platform" id="9" name="Set vector Y" sid="885111764655060" type="spr_Player">
+                                            <param id="0" name="Vector Y">-20</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <event-block sid="840523221902096">
+                                            <conditions>
+                                                <condition id="7" name="Is mirrored" sid="402634336810250" type="spr_Player" />
+                                            </conditions>
+                                            <actions>
+                                                <action behavior="Platform" id="8" name="Set vector X" sid="601580859382113" type="spr_Player">
+                                                    <param id="0" name="Vector X">-2000</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="357395600995975">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="111659746601693" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action behavior="Platform" id="8" name="Set vector X" sid="283764566044431" type="spr_Player">
+                                                    <param id="0" name="Vector X">2000</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <comment>Si le joueur collisionne avec qq chose, quitte le Dash et passe en Bump</comment>
+                                        <event-block sid="954375184215260">
+                                            <conditions>
+                                                <condition id="0" name="On collision with another object" sid="170881484005958" type="spr_Player">
+                                                    <param id="0" name="Object">ground</param>
+                                                </condition>
+                                            </conditions>
+                                            <actions>
+                                                <action id="-10" name="Set value" sid="366590985268236" type="spr_Player">
+                                                    <param id="0" name="Instance variable">PlayerState</param>
+                                                    <param id="1" name="Value">&quot;Bump&quot;</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                                <comment>Quand le joueur a eu une collision, réactive la gravité et rebondit en arrière</comment>
+                                <event-block sid="718030520302752">
+                                    <conditions>
+                                        <condition id="-7" name="Compare instance variable" sid="520025623057218" type="spr_Player">
+                                            <param id="0" name="Instance variable">PlayerState</param>
+                                            <param id="1" name="Comparison">0</param>
+                                            <param id="2" name="Value">&quot;Bump&quot;</param>
+                                        </condition>
+                                    </conditions>
+                                    <actions>
+                                        <action id="4" name="Set animation" sid="978832354818240" type="spr_Player">
+                                            <param id="0" name="Animation">&quot;Bump&quot;</param>
+                                            <param id="1" name="From">1</param>
+                                        </action>
+                                        <action behavior="Platform" id="5" name="Set gravity" sid="832913577134208" type="spr_Player">
+                                            <param id="0" name="Gravity">3000</param>
+                                        </action>
+                                    </actions>
+                                    <sub-events>
+                                        <event-block sid="677993046730849">
+                                            <conditions>
+                                                <condition id="7" name="Is mirrored" sid="725120726704645" type="spr_Player" />
+                                            </conditions>
+                                            <actions>
+                                                <action behavior="Platform" id="8" name="Set vector X" sid="285971220021123" type="spr_Player">
+                                                    <param id="0" name="Vector X">250</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                        <event-block sid="427860758532095">
+                                            <conditions>
+                                                <condition id="-22" name="Else" sid="171676976084036" type="System" />
+                                            </conditions>
+                                            <actions>
+                                                <action behavior="Platform" id="8" name="Set vector X" sid="262317254597782" type="spr_Player">
+                                                    <param id="0" name="Vector X">-250</param>
+                                                </action>
+                                            </actions>
+                                        </event-block>
+                                    </sub-events>
+                                </event-block>
+                            </sub-events>
+                        </event-group>
+                        <comment>Si le joueur était en Fall, le met en Run</comment>
+                        <event-block sid="964101062337425">
+                            <conditions>
+                                <condition id="4" name="On finished" sid="112598330494792" type="spr_Player">
+                                    <param id="0" name="Animation">&quot;Fall&quot;</param>
+                                </condition>
+                            </conditions>
+                            <actions>
+                                <action id="-10" name="Set value" sid="321487009766944" type="spr_Player">
+                                    <param id="0" name="Instance variable">PlayerState</param>
+                                    <param id="1" name="Value">&quot;Run&quot;</param>
+                                </action>
+                            </actions>
+                        </event-block>
+                    </sub-events>
+                </event-group>
+            </sub-events>
+        </event-group>
+        <event-group description="Déplace la caméra" sid="256407225994112" title="Camera control">
+            <sub-events>
+                <comment>Place la caméra devant le joueur</comment>
+                <event-block sid="223670686330224">
+                    <conditions>
+                        <condition id="7" inverted="1" name="Is mirrored" sid="786198310188602" type="spr_Player" />
+                    </conditions>
+                    <actions>
+                        <action id="-3" name="Set position" sid="830049291915120" type="camera">
+                            <param id="0" name="X">lerp(Self.X+40,spr_Player.X,0.1)</param>
+                            <param id="1" name="Y">lerp(Self.Y,spr_Player.Y,0.1)</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="704084501888771">
+                    <conditions>
+                        <condition id="7" name="Is mirrored" sid="792515280667692" type="spr_Player" />
+                    </conditions>
+                    <actions>
+                        <action id="-3" name="Set position" sid="723290281511997" type="camera">
+                            <param id="0" name="X">lerp(Self.X-40,spr_Player.X,0.1)</param>
+                            <param id="1" name="Y">lerp(Self.Y,spr_Player.Y,0.1)</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+        <event-group description="Outils de debug" sid="493615410688950" title="Debug tools">
+            <sub-events>
+                <comment>Affiche l&apos;état du joueur dans le texte in game</comment>
+                <event-block sid="588260998755337">
+                    <conditions>
+                        <condition id="-1" name="Every tick" sid="720984825084587" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="0" name="Set text" sid="282008185656725" type="debug_PlayerState">
+                            <param id="0" name="Text">spr_Player.PlayerState</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="195624679328869">
+                    <conditions>
+                        <condition behavior="Platform" disabled="1" id="0" name="Is moving" sid="133080052345353" type="spr_Player" />
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Set opacity" sid="767683438982251" type="Sprite">
+                            <param id="0" name="Opacity">100</param>
+                        </action>
+                    </actions>
+                </event-block>
+                <event-block sid="246057195685366">
+                    <conditions>
+                        <condition disabled="1" id="-22" name="Else" sid="481884609270626" type="System" />
+                    </conditions>
+                    <actions>
+                        <action id="-16" name="Set opacity" sid="718029386891702" type="Sprite">
+                            <param id="0" name="Opacity">0</param>
+                        </action>
+                    </actions>
+                </event-block>
+            </sub-events>
+        </event-group>
+    </events>
+</c2eventsheet>
